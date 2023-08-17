@@ -10,15 +10,14 @@ import os
 
 def main():
     # Check if the correct number of command-line arguments is provided
-    if len(sys.argv) != 4:
-        print("Number of argument must be 4")
-        print("Usage: python3 script_name.py input_path model_path output_path")
+    if len(sys.argv) != 3:
+        print("Number of argument must be 3")
+        print("Usage: MLST_classifier_cd input_path output_path")
         sys.exit(1)
 
     # Extract the command-line arguments
     input_csv_file = sys.argv[1]
-    model_file = sys.argv[2]
-    output_csv_file = sys.argv[3]
+    output_csv_file = sys.argv[2]
 
     # Read the input CSV file
     try:
@@ -29,7 +28,9 @@ def main():
 
     # Load the pre-trained model
     try:
-        model = joblib.load(model_file)   # Load the pre-trained model from the specified file
+        script_directory = os.path.dirname(os.path.abspath(__file__))
+        model_path = os.path.join(script_directory, "finalized_KNN_model.sav")
+        model = joblib.load(model_path)
     except FileNotFoundError:
         print("Error: Model file not found.")
         sys.exit(1)
