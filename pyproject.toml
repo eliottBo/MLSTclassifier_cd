@@ -10,7 +10,12 @@ description = "multi-locus sequence type clade classifier for C.difficile"
 readme = "README.md"
 license = "Apache License"
 
-#add pandas 2.0.3 and joblib 1.3.2 and matplotlib, plotly
+[tool.poetry.dependencies]
+python = ">=3.11.0"
+matplotlib = ">=3.7.0"
+pandas = ">=1.5.3"
+joblib = ">=1.2.0"
+plotly = ">=5.15.0"
 
 [tool.poetry.scripts]
 mlst_classifier_cd = "mlstclassifiertest.MLST_classifier_EB:main"
