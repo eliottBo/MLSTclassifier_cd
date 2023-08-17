@@ -1,0 +1,20 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "mlstclassifiertest"
+version = "0.1.0"
+authors = ["Eliott Bosshard"]
+description = "multi-locus sequence type clade classifier for C.difficile"
+readme = "README.md"
+license = "Apache License"
+
+#add pandas 2.0.3 and joblib 1.3.2 and matplotlib, plotly
+
+[tool.poetry.scripts]
+mlst_classifier_cd = "mlstclassifiertest.MLST_classifier_EB:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
