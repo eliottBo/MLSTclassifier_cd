@@ -16,6 +16,7 @@ matplotlib = ">=3.7.0"
 pandas = ">=1.5.3"
 joblib = ">=1.2.0"
 plotly = ">=5.15.0"
+scikit-learn = "^0.24"
 
 [tool.poetry.scripts]
 mlst_classifier_cd = "mlstclassifiertest.MLST_classifier_EB:main"
