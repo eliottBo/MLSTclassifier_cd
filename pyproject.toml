@@ -14,9 +14,9 @@ license = "Apache License"
 python = ">=3.11.0"
 matplotlib = ">=3.7.0"
 pandas = ">=1.5.3"
-joblib = ">=1.2.0"
+joblib = "=1.2.0"
 plotly = ">=5.15.0"
-scikit-learn = ">=1.2.1"
+scikit-learn = "=1.2.1"
 
 [tool.poetry.scripts]
 mlst_classifier_cd = "mlstclassifiertest.MLST_classifier_EB:main"
