@@ -12,7 +12,7 @@ def main():
     # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 3:
         print("Number of argument must be 3")
-        print("Usage: MLST_classifier_cd input_path output_path")
+        print("Usage: MLSTclassifier_cd input_path output_path")
         sys.exit(1)
 
     # Extract the command-line arguments

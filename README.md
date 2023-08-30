@@ -1,23 +1,35 @@
-# Overview
+# MLSTclassifier_cd
 
-## MLST-based clade classifiers
-Here I implemented different ML classifiers (KNN, RF) that take a Multi-Locus Sequence Type (MLST) file from strains of *C.difficile* or *C-difficile*-like and output a clade prediction (including cryptic clades). This is to make it easier and faster to predict a clade instead of doing it with phylogenetic tree building using STs. These classifiers are accurate at ~92%. I provided the pre-trained models of KNN and RF (.sav) for you to try them.
-Inspired from StatQuest methodology (https://www.youtube.com/watch?v=q90UDEgYqeI&t=3327s).
-I used the Scikit-learn library
+## Table of Contents
 
-## Steps:
-- Load dataset: training and testing sets are from public PubMLST database of *C.difficile*.
-- Apply GridSearchCV to find the best parameters (for KNN) or do pruning for RF.
-- Train the classifier with best parameters.
-- Predict clades on test set
-- Print report and confusion matrix
+- [Overview](#overview)
+
+- [Installation](#installation)
+
+- [Usage](#usage)
+
+- [Output](#output)
+
+## Overview
+
+Enhance your clade prediction process with MLSTclassifier_cd, a powerful machine learning tool that employs K-Nearest Neighbors (KNN) algorithm. Designed specifically for Multi-Locus Sequence Type (MLST) analysis of _C.difficile_ strains, including cryptic variants, this tool streamlines and accelerates clade prediction. MLSTclassifier_cd achieves accuracy of approximately 92% for predictions.
+
+StatQuest methodology was used to build the model (https://www.youtube.com/watch?v=q90UDEgYqeI&t=3327s). Powered by the Scikit-learn library, MLSTclassifier_cd is a good tool to have a first classification of your _C.difficile_ strains including cryptic ones.
+
+## Installation:
+
+**Install PyPI package:**
+
+`pip install MLSTclassifier_cd`
 
 ## Usage:
-The following libraries are necessary to run the script:
-- sys
-- pandas
-- joblib
 
-After downloading model.sav and MLST_classifier_EB.py and having your input file of MLST (see MLST_file_example.csv):
-In the terminal write the following command:
-```python3 MLST_classifier_EB.py path/to/input path/to/model.sav path/to/output```
+### Basic Command:
+
+The query csv file must have the same structure as the example "MLST_file_example.csv".
+
+`MLSTclassifier_cd [query csv file path] [output path]`
+
+## Output:
+
+After running MLSTclassifier_cd, the output file should contain an additional column named "predicted_clade"
