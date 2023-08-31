@@ -9,6 +9,7 @@ authors = ["Eliott Bosshard"]
 description = "multi-locus sequence type clade classifier for C.difficile"
 readme = "README.md"
 license = "Apache License"
+repository = "https://github.com/eliottBo/MLSTclassifier_cd"
 
 [tool.poetry.dependencies]
 python = ">=3.11.0"

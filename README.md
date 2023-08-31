@@ -16,11 +16,13 @@ Enhance your clade prediction process with MLSTclassifier_cd, a powerful machine
 
 StatQuest methodology was used to build the model (https://www.youtube.com/watch?v=q90UDEgYqeI&t=3327s). Powered by the Scikit-learn library, MLSTclassifier_cd is a good tool to have a first classification of your _C.difficile_ strains including cryptic ones.
 
+GitHub repo: https://github.com/eliottBo/MLSTclassifier_cd
+
 ## Installation:
 
 **Install PyPI package:**
 
-`pip install MLSTclassifier_cd`
+`pip install mlstclassifier-cd`
 
 ## Usage:
 
