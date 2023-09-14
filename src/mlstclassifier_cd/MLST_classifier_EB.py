@@ -21,9 +21,15 @@ def main():
 
     # Read the input CSV file
     try:
-        df = pd.read_csv(input_csv_file)
+        if input_csv_file.endswith(".txt"):
+            df = pd.read_table(input_csv_file)
+        elif input_csv_file.endswith(".csv"):
+            df = pd.read_csv(input_csv_file)
+        else: 
+            print("Error: Make sure the input file is in format .txt or .csv.")
+            sys.exit(1)
     except FileNotFoundError:
-        print("Error: Input CSV file not found.")
+        print("Error: Input file not found.")
         sys.exit(1)
 
     # Load the pre-trained model
@@ -39,11 +45,13 @@ def main():
     X = df[['adk', 'atpA', 'dxr', 'glyA', 'recA', 'sodA', 'tpi']]   # Extract columns corresponding to the 7 genes as features 'X'
     df['predicted_clade'] = model.predict(X)   # Make predictions using the pre-trained model and add them as a new column 'predicted_clade' in the DataFrame 'df'
     
+    # Save the raw count in a separated file called:
     output_dir = os.path.dirname(output_csv_file)
-    with open(os.path.join(output_dir, "stat.txt"), "w") as f:
-        f.write("Total number of sample: {}\n".format(df.shape[0]))
-        f.write("Counts of predicted classes:\n")
-        f.write(str(df['predicted_clade'].value_counts()))
+    count = df['predicted_clade'].value_counts() # Extract value count
+    count_df = pd.DataFrame(count) # Create a df with value count
+    with open(os.path.join(output_dir, "count.csv"), "w") as f: # Create the file count.csv with the value count df
+        count_df.to_csv(f, index=True)
+    
 
     # Create a pie chart with the value counts
     fig = make_subplots(1, 1, specs=[[{"type": "pie"}]])
