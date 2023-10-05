@@ -31,16 +31,23 @@ https://pypi.org/project/mlstclassifier-cd/
 
 ## Usage:
 
+
+The query can be a .txt file (as the one extracted from PubMLST), a csv file with the same structure as the example "MLST_file_example.csv" or an output file from [FastMLST](https://github.com/EnzoAndree/FastMLST).
+
+Make sure you match the input file extension with the input type argument:
+- Text file (.txt) from PubMLST: `pubmlst` argument;
+- CSV file with the same structure as "MLST_file_example.csv": `csv` argument;
+- Output from FastMLST: `fastmlst` argument.
+
 ### Basic Command:
+`MLSTclassifier_cd [query file path] [output path] [input type]`
 
-The query csv file must have the same structure as the example "MLST_file_example.csv".
-
-`MLSTclassifier_cd [query csv file path] [output path]`
+Example: `MLSTclassifier_cd /Desktop/folder_name/MLST_file_example.csv /Desktop/folder_name/exmple_output.csv csv`
 
 ## Output:
 
 After running MLSTclassifier_cd, the output file should contain an additional column named "predicted_clade".
-It also create the following files:
+It also creates the following files:
 
 - "pie_chart.html" displays the proportions of the different classes found.
 - "count.csv" a csv file containing the raw value count of your predicted clades for you to generate your own graphs!
