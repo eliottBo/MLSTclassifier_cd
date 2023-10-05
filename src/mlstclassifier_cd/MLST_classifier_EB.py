@@ -64,7 +64,7 @@ def main():
             df = fastmlst_to_df(args.input_file)
         else:
         # Raise an error for an invalid file format
-            raise ValueError("Error: Make sure the input file is in format .txt, .csv, or comes from fastMLST and that you write the argument correctly.")
+            raise ValueError("Error: Make sure the input file is in format .txt, .csv, or comes from FastMLST and that you write the argument correctly.")
     except FileNotFoundError:# Handle the case where the input file is not found
         print("Error: Input file not found.")
         sys.exit(1)
