@@ -14,7 +14,7 @@ import re
 def main():
     # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 4:
-        print("Number of argument must be 4")
+        print("Error: Number of argument must be 4")
         print("Usage: MLSTclassifier_cd input_path output_path input_type")
         sys.exit(1)
 
