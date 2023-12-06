@@ -71,7 +71,7 @@ def main():
     # Load the pre-trained model
     try:
         script_directory = os.path.dirname(os.path.abspath(__file__))
-        model_path = os.path.join(script_directory, "KNN_model_080923.sav")
+        model_path = os.path.join(script_directory, "KNN_model_061223.sav")
         model = joblib.load(model_path)
     except FileNotFoundError:
         print("Error: Model file not found.")
