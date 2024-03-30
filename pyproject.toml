@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "mlstclassifier_cd"
-version = "0.3.4"
+version = "0.3.3"
 authors = ["Eliott Bosshard"]
 description = "multi-locus sequence type clade classifier for C.difficile"
 readme = "README.md"
