@@ -11,18 +11,31 @@ import argparse
 import re
 
 def main():
+    # Define the command-line arguments
+    parser = argparse.ArgumentParser(
+        prog='mlstclassifier-cd',
+        description='The program takes a directory and an output name as arguments. It reads all the files in the directory and use this information to classify the MLSTs into clades'
+    )
+    parser.add_argument(
+        'input_directory',
+        type=str,
+        action='store',
+        help='This argument should be a path to the input directory containing query files in either .fastmlst or .mlst'  # The input is a path to a directory
+    )
+    parser.add_argument(
+        'output_file',
+        type=str,
+        action='store',
+        help='This argument should be a path to the output file, with the name of the output and its desired extension'
+    )
+
+    args = parser.parse_args()
+
     # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 3:
         print("Error: Number of argument must be 3")
         print("Usage: MLSTclassifier_cd input_path output_path")
         sys.exit(1)
-
-
-    # Define the command-line arguments
-    parser = argparse.ArgumentParser(prog= 'mlstclassifier-cd', description='The program takes a directory and an output name as arguments. It reads all the files in the directory and use this information to classify the MLSTs into clades')
-    parser.add_argument('input_directory', type=str, action='store', help='This argument should be a path to the input directory containing query files in either .fastmlst or .mlst') # The input is a path to a directory
-    parser.add_argument('output_file', type=str, action='store', help='This argument should be a path to the output file, with the name of the output and its desired extension')
-    args = parser.parse_args()
 
     # Used to extract the value of the alleles in a mlst or fastmlst output (made with chatGPT)
     def extract_number(v):
