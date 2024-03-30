@@ -1,0 +1,21 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: MLSTclassifier_cd
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Eliott
+    family-names: Bosshard
+    email: eliottob6@gmail.com
+    affiliation: Karolinska Institutet
+    orcid: 'https://orcid.org/0009-0000-2384-0369'
+keywords:
+  - MLST
+  - Clostridioides difficile
+  - microbiology
+  - typing
+license: Apache-2.0
