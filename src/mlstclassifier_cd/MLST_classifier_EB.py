@@ -10,6 +10,51 @@ import os
 import argparse
 import re
 
+
+# Used to extract the value of the alleles in a mlst or fastmlst output (made with chatGPT)
+def extract_number(v):
+    """Extract the number in brackets (the allele number)"""
+    match = re.search(r'\([~-]?(\d+)[\?]?\)', v) # Use regular expression to find the number within brackets and handle ~ and -
+    if match: # If a match is found, return the extracted number as an integer
+        return int(match.group(1))
+    else:
+        return "NA" # If no match is found, return "NA"
+
+# Takes a df with each line corresponding to a sample and extract the allele value
+def modify_df(dataframe):
+    """Simplifies the dataframe to make it suitable for the model"""
+    col_to_extract = [0,3,4,5,6,7,8,9]
+    col_genes = [3,4,5,6,7,8,9]
+    df = dataframe.iloc[:, col_to_extract].copy()
+    df.loc[:, col_genes] = df[col_genes].map(extract_number) # Apply the 'extract_number' function to each element in the selected columns
+    df.rename(columns={0: 'sample',3: 'adk',4: 'atpA',5: 'dxr',6: 'glyA',7: 'recA',8: 'sodA',9: 'tpi'}, inplace=True) # Rename the columns to be recognized for the prediction
+    return df
+
+# Takes a path to the dir containing the mlst or fastmlst files. Combine the information in each file in a df
+def create_df(dir_path):
+    """Reads all the files in the directory and concatenate the information in a unique dataframe"""
+    data_mlst = []
+    data_fastmlst = []
+
+    for filename in os.listdir(dir_path):
+        f = os.path.join(dir_path, filename)
+        if f.endswith(".fastmlst"):
+                with open(f, 'r') as f:
+                    line = f.readline().strip()
+                    data_fastmlst.append(line)
+                    df_fastmlst = pd.DataFrame(data_fastmlst, columns=['line'])
+                    df_fastmlst = df_fastmlst['line'].str.split(',', expand=True)
+                    final_df = modify_df(df_fastmlst)
+        elif f.endswith(".mlst"):
+            with open(f, 'r') as f:
+                    line = f.readline().strip()
+                    data_mlst.append(line)
+                    df_mlst = pd.DataFrame(data_mlst, columns=['line'])
+                    df_mlst = df_mlst['line'].str.split('\t', expand=True)
+                    final_df = modify_df(df_mlst)
+    return final_df
+
+
 def main():
     # Define the command-line arguments
     parser = argparse.ArgumentParser(
@@ -37,48 +82,6 @@ def main():
         print("Usage: MLSTclassifier_cd input_path output_path")
         sys.exit(1)
 
-    # Used to extract the value of the alleles in a mlst or fastmlst output (made with chatGPT)
-    def extract_number(v):
-        """Extract the number in brackets (the allele number)"""
-        match = re.search(r'\([~-]?(\d+)[\?]?\)', v) # Use regular expression to find the number within brackets and handle ~ and -
-        if match: # If a match is found, return the extracted number as an integer
-            return int(match.group(1))
-        else:
-            return "NA" # If no match is found, return "NA"
-    
-    # Takes a df with each line corresponding to a sample and extract the allele value
-    def modify_df(dataframe):
-        """Simplifies the dataframe to make it suitable for the model"""
-        col_to_extract = [0,3,4,5,6,7,8,9]
-        col_genes = [3,4,5,6,7,8,9]
-        df = dataframe.iloc[:, col_to_extract].copy()
-        df.loc[:, col_genes] = df[col_genes].map(extract_number) # Apply the 'extract_number' function to each element in the selected columns
-        df.rename(columns={0: 'sample',3: 'adk',4: 'atpA',5: 'dxr',6: 'glyA',7: 'recA',8: 'sodA',9: 'tpi'}, inplace=True) # Rename the columns to be recognized for the prediction
-        return df
-    
-    # Takes a path to the dir containing the mlst or fastmlst files. Combine the information in each file in a df
-    def create_df(dir_path):
-        """Reads all the files in the directory and concatenate the information in a unique dataframe"""
-        data_mlst = []
-        data_fastmlst = []
-
-        for filename in os.listdir(dir_path):
-            f = os.path.join(dir_path, filename)
-            if f.endswith(".fastmlst"):
-                    with open(f, 'r') as f:
-                        line = f.readline().strip()
-                        data_fastmlst.append(line)
-                        df_fastmlst = pd.DataFrame(data_fastmlst, columns=['line'])
-                        df_fastmlst = df_fastmlst['line'].str.split(',', expand=True)
-                        final_df = modify_df(df_fastmlst)
-            elif f.endswith(".mlst"):
-                with open(f, 'r') as f:
-                        line = f.readline().strip()
-                        data_mlst.append(line)
-                        df_mlst = pd.DataFrame(data_mlst, columns=['line'])
-                        df_mlst = df_mlst['line'].str.split('\t', expand=True)
-                        final_df = modify_df(df_mlst)
-        return final_df
     
     # Checks if the path given in argument exits and call creat_df to transform the input into readable data for the model
     if os.path.exists(args.input_directory) == True:
