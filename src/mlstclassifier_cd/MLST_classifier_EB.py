@@ -76,13 +76,14 @@ def main():
 
     args = parser.parse_args()
 
+
     # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 3:
         print("Error: Number of argument must be 3")
         print("Usage: MLSTclassifier_cd input_path output_path")
         sys.exit(1)
 
-    
+
     # Checks if the path given in argument exits and call creat_df to transform the input into readable data for the model
     if os.path.exists(args.input_directory) == True:
         try:
@@ -90,6 +91,7 @@ def main():
         except UnboundLocalError:
             print("Error: Make sure there are only .mlst or only .fastmlst files in your directory")
             sys.exit(1)
+
 
     # Load the pre-trained model
     try:
