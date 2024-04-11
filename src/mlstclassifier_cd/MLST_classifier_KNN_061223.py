@@ -12,7 +12,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.neighbors import KNeighborsClassifier
 
 # Import data:
-train_cryptic = pd.read_csv('/Users/eliott/Library/CloudStorage/OneDrive-KarolinskaInstitutet/Thesis_CR/data/mlst/MLST_dataset_known_cryptic.csv')
+train_cryptic = pd.read_csv('data/MLST_dataset_known_cryptic.csv')
 train_cryptic = train_cryptic.iloc[:,1:9]# get rid of index column
 print(train_cryptic['mlst_clade'].value_counts())
 
