@@ -19,8 +19,6 @@ print(train_cryptic['mlst_clade'].value_counts())
 # Create training sets:
 X = train_cryptic.iloc[:,0:7]
 y = train_cryptic.iloc[:,7]
-# print(X.head(10))
-# print(y.head(10))
 
 # Split into train and test sets:
 X_train, X_test, y_train, y_test = train_test_split(X, y, random_state = 0, test_size = 0.33, stratify = y)
@@ -46,14 +44,14 @@ y_pred = final_model.predict(X_test)
 cm = confusion_matrix(y_test, y_pred)
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels = final_model.classes_)
 disp.plot()
-#plt.savefig('KNN_cm_knownvscryptic.svg', format= 'svg')
+plt.savefig('cm_classifier.svg', format= 'svg')
 plt.show()
 
 # Print a report with following metrics: precision, recall, F1-score
 perf_report = classification_report(y_test, y_pred, output_dict=True)
 df = pd.DataFrame(perf_report).transpose()
 print(df)
-#df.to_csv('perf_report_KNN_knownvscryptic.csv')
+df.to_csv('classifier_performance_report.csv')
 
 # Save the model:
 filename = 'KNN_model_061223.sav'
