@@ -8,6 +8,7 @@ from plotly.subplots import make_subplots
 import os
 import argparse
 import re
+from pathlib import Path
 
 
 # Used to extract the value of the alleles in a mlst or fastmlst output
@@ -48,10 +49,11 @@ def modify_df(dataframe: pd.DataFrame) -> pd.DataFrame:
 
 
 # Takes a path to the dir containing the mlst or fastmlst files. Combine the information in each file in a df.
-def create_df(dir_path) -> pd.DataFrame:
+def create_df(dir_path: Path) -> pd.DataFrame:
     """Reads all the files in the directory and concatenate the information in a unique dataframe."""
     data_mlst = []
     data_fastmlst = []
+    dir_path = Path(dir_path)
 
     for filename in os.listdir(dir_path):
         f = os.path.join(dir_path, filename)
@@ -99,18 +101,21 @@ def main():
         print("Usage: MLSTclassifier_cd input_path output_directory_path")
         sys.exit(1)
 
+    input_directory = Path(args.input_directory)
+    output_dir = Path(args.output_dir)
+
     # Checks if the path given in argument exits and call creat_df to transform the input into readable data for the model
-    if os.path.exists(args.input_directory) == True:
+    if os.path.exists(input_directory) == True:
         try:
-            df = create_df(args.input_directory)
+            df = create_df(input_directory)
         except UnboundLocalError:
             print(
                 "Error: Make sure there are only .mlst or only .fastmlst files in your input directory"
             )
             sys.exit(1)
-    if not os.path.exists(args.output_dir):
-        os.makedirs(args.output_dir)
-    output_dir = args.output_dir
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+    output_dir = output_dir
 
     # Load the pre-trained model
     try:
