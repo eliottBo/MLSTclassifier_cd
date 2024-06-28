@@ -108,6 +108,9 @@ def main():
                 "Error: Make sure there are only .mlst or only .fastmlst files in your input directory"
             )
             sys.exit(1)
+    if not os.path.exists(args.output_dir):
+        os.makedirs(args.output_dir)
+    output_dir = args.output_dir
 
     # Load the pre-trained model
     try:
@@ -129,7 +132,6 @@ def main():
     )  # Make predictions using the pre-trained model and add them as a new column 'predicted_clade' in the DataFrame 'df'
 
     # Save the raw count in a separated file called count.csv:
-    output_dir = os.path.dirname(args.output_dir)
     count = df["predicted_clade"].value_counts()  # Extract value count
     count_df = pd.DataFrame(count)  # Create a df with value count
     with open(
@@ -168,4 +170,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()  # Call the main function if the script is run as the main program (not imported as a module)
+    main()  # Call the main function if the script is run as the main program
