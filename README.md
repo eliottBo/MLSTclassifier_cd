@@ -32,17 +32,17 @@ https://pypi.org/project/mlstclassifier-cd/
 ## Usage:
 
 
-The query is a directory containing ".mlst" files like the ones retrieved on PubMLST or a path to a directory containing ".fastmlst" output files from [FastMLST](https://github.com/EnzoAndree/FastMLST).
+The first argument is a path to a directory containing ".mlst" (like the ones optained from PubMLST) or ".fastmlst" files from [FastMLST](https://github.com/EnzoAndree/FastMLST). The second argument is a path to the output directory where the output files will be.
 
 ### Basic Command:
-`MLSTclassifier_cd [query directory path] [output file path]`
+`MLSTclassifier_cd [input directory path] [output directory path]`
 
-Example: `MLSTclassifier_cd /Desktop/directory_name /Desktop/directory_name/example_output.csv`
+Example: `MLSTclassifier_cd /Desktop/input_directory_name /Desktop/output_directory_name/`
 
 ## Output:
 
-After running MLSTclassifier_cd, the output file should contain an additional column named "predicted_clade".
+After running MLSTclassifier_cd, the result file contain a column named "predicted_clade".
 It also creates the following files:
 
-- "pie_chart.html" displays the proportions of the different classes found.
+- "pie_chart.html" plot representing the proportions of the different clades found.
 - "count.csv" a csv file containing the raw value count of your predicted clades for you to generate your own graphs!

@@ -85,10 +85,10 @@ def main():
         help="This argument should be a path to the input directory containing query files in either .fastmlst or .mlst",  # The input is a path to a directory
     )
     parser.add_argument(
-        "output_file",
+        "output_dir",
         type=str,
         action="store",
-        help="This argument should be a path to the output file, with the name of the output and its desired extension",
+        help="This argument is a path to the output directory",
     )
 
     args = parser.parse_args()
@@ -96,7 +96,7 @@ def main():
     # Check if the correct number of command-line arguments is provided
     if len(sys.argv) != 3:
         print("Error: Number of argument must be 3")
-        print("Usage: MLSTclassifier_cd input_path output_path")
+        print("Usage: MLSTclassifier_cd input_path output_directory_path")
         sys.exit(1)
 
     # Checks if the path given in argument exits and call creat_df to transform the input into readable data for the model
@@ -105,7 +105,7 @@ def main():
             df = create_df(args.input_directory)
         except UnboundLocalError:
             print(
-                "Error: Make sure there are only .mlst or only .fastmlst files in your directory"
+                "Error: Make sure there are only .mlst or only .fastmlst files in your input directory"
             )
             sys.exit(1)
 
@@ -129,7 +129,7 @@ def main():
     )  # Make predictions using the pre-trained model and add them as a new column 'predicted_clade' in the DataFrame 'df'
 
     # Save the raw count in a separated file called count.csv:
-    output_dir = os.path.dirname(args.output_file)
+    output_dir = os.path.dirname(args.output_dir)
     count = df["predicted_clade"].value_counts()  # Extract value count
     count_df = pd.DataFrame(count)  # Create a df with value count
     with open(
@@ -137,7 +137,7 @@ def main():
     ) as f:  # Create the file count.csv with the value count df
         count_df.to_csv(f, index=True)
 
-    # Create a pie chart with the value counts (made with chatGPT)
+    # Create a pie chart with the value counts
     fig = make_subplots(1, 1, specs=[[{"type": "pie"}]])
     fig.add_trace(
         go.Pie(
@@ -156,7 +156,9 @@ def main():
 
     # Write the DataFrame with the added column of predictions to the output CSV file:
     try:
-        with open(args.output_file, "w") as f:  # Open the output CSV file
+        with open(
+            os.path.join(output_dir, "result.csv"), "w"
+        ) as f:  # Open the result CSV file
             df.to_csv(
                 f, index=False
             )  # Write the DataFrame 'df' to the CSV file 'f', excluding the index column
