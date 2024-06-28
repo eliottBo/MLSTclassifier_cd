@@ -3,7 +3,6 @@
 import pandas as pd
 import sys
 import joblib
-import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import os
@@ -114,7 +113,6 @@ def main():
     try:
         script_directory = os.path.dirname(os.path.abspath(__file__))
         model_path = os.path.join(script_directory, "KNN_model_061223.sav")
-        print(script_directory)
         model = joblib.load(model_path)
     except FileNotFoundError:
         print("Error: Model file not found.")
